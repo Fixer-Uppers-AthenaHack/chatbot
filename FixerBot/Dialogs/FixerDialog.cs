@@ -19,7 +19,7 @@ namespace FixerBot.Dialogs
             "Further Diagnosis"
         };
 
-        public FixerDialog(FixItYourselfDialog fixItYourselfDialog, ResourceDialog resourceDialog)
+        public FixerDialog(FixItYourselfDialog fixItYourselfDialog, ResourceDialog resourceDialog, CreatePostingDialog createPostingDialog)
             : base(nameof(FixerDialog))
         {
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
@@ -34,6 +34,7 @@ namespace FixerBot.Dialogs
             AddDialog(new ConfirmPrompt(nameof(ConfirmPrompt)));
             AddDialog(fixItYourselfDialog);
             AddDialog(resourceDialog);
+            AddDialog(createPostingDialog);
 
             // The initial child Dialog to run.
             InitialDialogId = nameof(WaterfallDialog);
@@ -51,6 +52,15 @@ namespace FixerBot.Dialogs
                 case "Fix It Myself":
                     // Run the BookingDialog giving it whatever details we have from the LUIS call, it will fill out the remainder.
                     return await stepContext.BeginDialogAsync(nameof(FixItYourselfDialog), fixDetails, cancellationToken);
+                case "Find an Expert":
+                    var postDeets = new PostingDetails()
+                    {
+                        Posting = Posting.GetPerson,
+                        Item = fixDetails.Item,
+                        Problem = fixDetails.Problem
+                    };
+
+                    return await stepContext.BeginDialogAsync(nameof(CreatePostingDialog), postDeets, cancellationToken);
                 default:
                     var defaultText = $"TODO: another flow here for {fixer}";
                     var defaultMessage = MessageFactory.Text(defaultText, defaultText, InputHints.IgnoringInput);
@@ -59,7 +69,7 @@ namespace FixerBot.Dialogs
             }
 
 
-            return await stepContext.NextAsync(true, cancellationToken);
+            return await stepContext.NextAsync(fixDetails, cancellationToken);
         }
 
         private async Task<DialogTurnResult> WhoToFixStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
@@ -124,6 +134,12 @@ namespace FixerBot.Dialogs
         private async Task<DialogTurnResult> RetryOrProgressAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             var fixDetails = (FixDetails)stepContext.Result;
+
+            if(fixDetails == null)
+            {
+                return await stepContext.NextAsync(null, cancellationToken);
+            }
+
             var confirm = fixDetails.Correct;
 
             if (confirm)

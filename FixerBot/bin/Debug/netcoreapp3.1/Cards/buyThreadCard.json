@@ -1,0 +1,28 @@
+﻿{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+      "type": "TextBlock",
+      "spacing": "medium",
+      "size": "default",
+      "weight": "bolder",
+      "text": "You can buy thread from:",
+      "wrap": true,
+      "maxLines": 0
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.OpenUrl",
+      "title": "The Cambridge Fabric Company (Local Business)",
+      "url": "https://thecambridgefabriccompany.com/"
+    },
+    {
+      "type": "Action.OpenUrl",
+      "title": "Buy thread on ebay",
+      "url": "https://www.ebay.co.uk/sch/i.html?_from=R40&_trksid=p2499334.m570.l1313&_nkw=orange+thread&_sacat=28172"
+    }
+  ]
+}

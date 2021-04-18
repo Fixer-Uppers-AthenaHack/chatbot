@@ -12,8 +12,6 @@ namespace FixerBot
 
         public string Fixer { get; internal set; }
 
-        public string Material { get; internal set; }
-
         public bool Correct { get; set; }
     }
 }

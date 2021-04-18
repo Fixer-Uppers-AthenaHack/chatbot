@@ -7,12 +7,18 @@
   <ItemGroup>
     <Content Remove="Cards\buyThreadCard.json" />
     <Content Remove="Cards\fixJumperCard.json" />
+    <Content Remove="Cards\welcome.json" />
     <Content Remove="Cards\welcomeCard.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Cards\buyThreadCard.json" />
+    <EmbeddedResource Include="Cards\buyThreadCard.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cards\fixJumperCard.json" />
+    <EmbeddedResource Include="Cards\welcome.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cards\welcomeCard.json" />
   </ItemGroup>
 

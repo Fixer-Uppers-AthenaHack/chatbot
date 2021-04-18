@@ -26,6 +26,10 @@ namespace FixerBot.Dialogs
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
             {
                 WhatMaterialsAsync,
+                ResolveMaterialsAsync
+            }));
+            AddDialog(new WaterfallDialog("WaterFall2", new WaterfallStep[]
+            {
                 WhereGetMaterialsAsync,
                 ResolveGetMaterialsAsync
             }));
@@ -39,15 +43,14 @@ namespace FixerBot.Dialogs
 
         private async Task<DialogTurnResult> ResolveGetMaterialsAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
+            var matDeets = (MaterialDetails)stepContext.Options;
             var getMatsFrom = ((FoundChoice)stepContext.Result).Value;
-
-            var fixDetails = (FixDetails)stepContext.Options;
 
             switch (getMatsFrom)
             {
                 case "From a Shop":
                     // adaptive card with where to get materials
-                    var resourceCard = CreateMaterialsAttachment(fixDetails);
+                    var resourceCard = CreateMaterialsAttachment(matDeets);
                     var attachment = MessageFactory.Attachment(resourceCard, ssml: "Here are some resources");
                     var resourceResponse = await stepContext.Context.SendActivityAsync(attachment, cancellationToken);
                     break;
@@ -55,9 +58,9 @@ namespace FixerBot.Dialogs
                     var postingDetails = new PostingDetails
                     {
                         Posting = Posting.GetMaterials,
-                        Item = fixDetails.Item,
-                        Problem = fixDetails.Problem,
-                        Material = fixDetails.Material
+                        Item = matDeets.Item,
+                        Problem = matDeets.Problem,
+                        Material = matDeets.Material ?? "orange thread"
                     };
                     return await stepContext.BeginDialogAsync(nameof(CreatePostingDialog), postingDetails, cancellationToken);
                 default:
@@ -73,9 +76,9 @@ namespace FixerBot.Dialogs
 
         private async Task<DialogTurnResult> WhereGetMaterialsAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var fixDetails = (FixDetails)stepContext.Options;
+            var matDeets = (MaterialDetails)stepContext.Options;
 
-            var whereMaterials = $"Where do you want to get the {fixDetails.Material} from?";
+            var whereMaterials = $"Where do you want to get the {matDeets.Material} from?";
             var promptMessage = MessageFactory.Text(whereMaterials, whereMaterials, InputHints.ExpectingInput);
 
             var choicePrompt = new List<Choice>();
@@ -87,30 +90,37 @@ namespace FixerBot.Dialogs
             var prompOptions = new PromptOptions
             {
                 Prompt = promptMessage,
-                Choices = choicePrompt
+                Choices = choicePrompt,
+                
             };
 
             return await stepContext.PromptAsync("ChoicesChoices", prompOptions, cancellationToken);
         }
 
+        private async Task<DialogTurnResult> ResolveMaterialsAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        {
+            var matDeets = (MaterialDetails)stepContext.Options;
+            matDeets.Material = (string)stepContext.Result;
+
+            return await stepContext.ReplaceDialogAsync("WaterFall2", matDeets, cancellationToken);
+        }
+
         private async Task<DialogTurnResult> WhatMaterialsAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var fixDetails = (FixDetails)stepContext.Options;
+            var matDeets = (MaterialDetails)stepContext.Options;
 
-            if (string.IsNullOrWhiteSpace(fixDetails.Material))
+            if (string.IsNullOrWhiteSpace(matDeets.Material))
             {
-                var problemMessageTest = "TODO: Get User Input here. I need orange thread";
-                var problemMessage = MessageFactory.Text(problemMessageTest, problemMessageTest, InputHints.IgnoringInput);
-                await stepContext.Context.SendActivityAsync(problemMessage, cancellationToken);
-
-                fixDetails.Material = "orange thread";
+                var materialsMessage = "What materials do you need?";
+                var promptMessage = MessageFactory.Text(materialsMessage, materialsMessage, InputHints.ExpectingInput);
+                return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
             }
 
-            return await stepContext.NextAsync(fixDetails.Material, cancellationToken);
+            return await stepContext.NextAsync(matDeets.Material, cancellationToken);
         }
 
         // Load attachment from embedded resource.
-        private Attachment CreateMaterialsAttachment(FixDetails fixDetails)
+        private Attachment CreateMaterialsAttachment(MaterialDetails matDeets)
         {
             List<string> jumperList = new List<string>()
             {
@@ -119,7 +129,7 @@ namespace FixerBot.Dialogs
 
             //To Do: Add logic for different fixes... call IFitIt api?
             var cardResourcePath = "FixerBot.Cards.welcomeCard.json";
-            if (jumperList.Contains(fixDetails.Item.Split(" ").Last().ToLower()))
+            if (jumperList.Contains(matDeets.Item.Split(" ").Last().ToLower()))
             {
                 cardResourcePath = "FixerBot.Cards.buyThreadCard.json";
             }

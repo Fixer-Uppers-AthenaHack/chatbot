@@ -25,7 +25,7 @@
             },
             {
               "type": "TextBlock",
-              "text": "We're a community of fixers, we're here to teach you new skills and connect you with people who have materials or skills to help you. ",
+              "text": "We're a community of fixers. We're here to teach you new skills and connect you with people who have materials or skills to help you. ",
               "isSubtle": true,
               "wrap": true
             }

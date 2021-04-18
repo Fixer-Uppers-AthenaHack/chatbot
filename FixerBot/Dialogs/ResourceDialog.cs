@@ -66,7 +66,8 @@ namespace FixerBot.Dialogs
                     };
                     return await stepContext.BeginDialogAsync(nameof(CreatePostingDialog), postingDetails, cancellationToken);
                 case "I Need Materials":
-                    return await stepContext.BeginDialogAsync(nameof(GetMaterialsDialog), fixDetails, cancellationToken);
+                    MaterialDetails matDeets = new MaterialDetails(fixDetails);
+                    return await stepContext.BeginDialogAsync(nameof(GetMaterialsDialog), matDeets, cancellationToken);
                 case "Mending Complete":
                     // TO DO: Give Feedback and level up!
                     return await stepContext.NextAsync(null, cancellationToken);
