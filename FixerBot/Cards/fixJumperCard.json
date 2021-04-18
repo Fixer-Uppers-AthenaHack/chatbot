@@ -1,0 +1,28 @@
+﻿{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+      "type": "TextBlock",
+      "spacing": "medium",
+      "size": "default",
+      "weight": "bolder",
+      "text": "Let's fix it!",
+      "wrap": true,
+      "maxLines": 0
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.OpenUrl",
+      "title": "Simple sweater mend blog",
+      "url": "https://wornvalues.com/blog/simple-sweater-mend-under-arm-hole"
+    },
+    {
+      "type": "Action.OpenUrl",
+      "title": "Knitwear mending video",
+      "url": "https://www.youtube.com/watch?v=lbWWwKtsmBs"
+    }
+  ]
+}
