@@ -60,3 +60,8 @@ C:\Users\Ellen.Wootten\Documents\FixerUpperHackathon\FixerBot\obj\Release\netcor
 C:\Users\Ellen.Wootten\Documents\FixerUpperHackathon\FixerBot\obj\Release\netcoreapp3.1\FixerBot.dll
 C:\Users\Ellen.Wootten\Documents\FixerUpperHackathon\FixerBot\obj\Release\netcoreapp3.1\FixerBot.pdb
 C:\Users\Ellen.Wootten\Documents\FixerUpperHackathon\FixerBot\obj\Release\netcoreapp3.1\FixerBot.genruntimeconfig.cache
+C:\Users\Ellen.Wootten\Documents\FixerUpperHackathon\FixerBot\bin\Release\netcoreapp3.1\Cards\general-level.json
+C:\Users\Ellen.Wootten\Documents\FixerUpperHackathon\FixerBot\bin\Release\netcoreapp3.1\Cards\newWelcomeCard.json
+C:\Users\Ellen.Wootten\Documents\FixerUpperHackathon\FixerBot\bin\Release\netcoreapp3.1\Cards\path.json
+C:\Users\Ellen.Wootten\Documents\FixerUpperHackathon\FixerBot\bin\Release\netcoreapp3.1\Cards\sewing-level.json
+C:\Users\Ellen.Wootten\Documents\FixerUpperHackathon\FixerBot\bin\Release\netcoreapp3.1\Cards\welcome.json

@@ -64,3 +64,4 @@ C:\Users\Ellen.Wootten\Documents\FixerUpperHackathon\FixerBot\bin\Debug\netcorea
 C:\Users\Ellen.Wootten\Documents\FixerUpperHackathon\FixerBot\bin\Debug\netcoreapp3.1\Cards\sewing-level.json
 C:\Users\Ellen.Wootten\Documents\FixerUpperHackathon\FixerBot\bin\Debug\netcoreapp3.1\Cards\welcome.json
 C:\Users\Ellen.Wootten\Documents\FixerUpperHackathon\FixerBot\bin\Debug\netcoreapp3.1\Cards\newWelcomeCard.json
+C:\Users\Ellen.Wootten\Documents\FixerUpperHackathon\FixerBot\obj\Debug\netcoreapp3.1\FixerBot.csprojAssemblyReference.cache

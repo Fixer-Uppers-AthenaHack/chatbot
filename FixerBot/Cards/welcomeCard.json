@@ -25,7 +25,7 @@
             },
             {
               "type": "TextBlock",
-              "text": "First, describe the item that we're working on today.",
+              "text": "We're a community of fixers, we're here to teach you new skills and connect you with people who have materials or skills to help you. ",
               "isSubtle": true,
               "wrap": true
             }
@@ -38,7 +38,7 @@
             {
               "type": "Image",
               "size": "auto",
-              "url": "www.example.com/avatar.png"
+              "url": "https://fixerupperstorage.blob.core.windows.net/images/avatar.png"
             }
           ]
         }
